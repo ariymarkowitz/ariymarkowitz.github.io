@@ -18,6 +18,6 @@
     border-radius: 22px;
     background-color: var(--accent);
 
-    margin: -11.5px -3em 30px -1px;
+    margin: -18.5px -3em 30px -1px;
   }
 </style>
