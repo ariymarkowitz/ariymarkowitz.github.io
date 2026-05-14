@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Image-fill text with inner shadow</title>
+<style>
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    background: #1a1a1a;
+    font-family: system-ui, sans-serif;
+    gap: 2rem;
+    padding: 2rem;
+  }
+
+  .stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .stage span {
+    color: #888;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .fancy {
+    font-family: "Impact", "Arial Black", sans-serif;
+    font-size: clamp(4rem, 14vw, 10rem);
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    margin: 0;
+
+    /* Image fill */
+    background-image: url("https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=1200&q=80");
+    background-size: cover;
+    background-position: center;
+    -webkit-background-clip: text;
+            background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+
+    /* Inner shadow via SVG filter */
+    filter: url(#inner-shadow);
+  }
+
+  .fancy.sunset {
+    background-image: url("https://images.unsplash.com/photo-1495616811223-4d98c6e9c869?w=1200&q=80");
+  }
+
+  .fancy.ocean {
+    background-image: url("https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=1200&q=80");
+  }
+</style>
+</head>
+<body>
+
+<!-- Inline SVG filter: applied via filter: url(#inner-shadow) -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="inner-shadow">
+      <!-- 1. Blur the alpha channel of the source -->
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3" />
+      <!-- 2. Offset the blur down/right -->
+      <feOffset dx="3" dy="4" result="offsetBlur" />
+      <!-- 3. Subtract the offset from the original alpha to get inner edge -->
+      <feComposite in="offsetBlur" in2="SourceAlpha"
+                   operator="arithmetic" k2="-1" k3="1"
+                   result="shadowDiff" />
+      <!-- 4. Color the shadow black at 75% opacity -->
+      <feFlood flood-color="#000" flood-opacity="0.75" />
+      <feComposite in2="shadowDiff" operator="in" />
+      <!-- 5. Paint shadow on top of the original (image-filled) text -->
+      <feMerge>
+        <feMergeNode in="SourceGraphic" />
+        <feMergeNode />
+      </feMerge>
+    </filter>
+  </defs>
+</svg>
+
+<div class="stage">
+  <span>Forest</span>
+  <h1 class="fancy">HELLO</h1>
+</div>
+
+<div class="stage">
+  <span>Sunset</span>
+  <h1 class="fancy sunset">GLOW</h1>
+</div>
+
+<div class="stage">
+  <span>Ocean</span>
+  <h1 class="fancy ocean">WAVES</h1>
+</div>
+
+</body>
+</html>
