@@ -14,6 +14,13 @@
       tag: "Game"
     },
     {
+      title: "Apeirogon",
+      description: "",
+      url: "/images/apeirogon.jpg",
+      thumbnail: "/thumbnails/apeirogon.png",
+      tag: "Art"
+    },
+    {
       title: "Ripple",
       description: "Abstract interactive art",
       url: "https://ariymarkowitz.github.io/art/ripple/",
@@ -40,13 +47,6 @@
       url: "https://ariymarkowitz.github.io/Bruhat-Tits-Tree-Visualiser/",
       thumbnail: "/thumbnails/btt.png",
       tag: "Math"
-    },
-    {
-      title: "Apeirogon",
-      description: "",
-      url: "/images/apeirogon.jpg",
-      thumbnail: "/thumbnails/apeirogon.png",
-      tag: "Art"
     }
   ];
 </script>
