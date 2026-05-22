@@ -1,4 +1,10 @@
 <script lang="ts">
+  const tagColors: Record<string, string> = {
+    Game: 'rgb(38, 95, 52)',
+    Art:  'rgb(158, 88, 12)',
+    Math: 'rgb(22, 78, 155)'
+  };
+
   const projects = [
     {
       title: "Quick Sets",
@@ -9,7 +15,7 @@
     },
     {
       title: "Ripple",
-      description: "Abstract art",
+      description: "Abstract interactive art",
       url: "https://ariymarkowitz.github.io/art/ripple/",
       thumbnail: "/thumbnails/ripple.png",
       tag: "Art"
@@ -55,7 +61,7 @@
         </div>
         <div class="card-title-row">
           <span class="title">{project.title}</span>
-          <span class="tag">{project.tag}</span>
+          <span class="tag" style="--tag-color: {tagColors[project.tag]}; background-color: {tagColors[project.tag]}">{project.tag}</span>
         </div>
         <p class="desc">{project.description}</p>
       </a>
@@ -120,6 +126,8 @@
     font-weight: 600;
     padding: 0.15em 0.5em;
     border-radius: 2px;
+    position: relative;
+    top: -0.1em;
   }
 
   .card:hover .thumb-wrapper {
