@@ -4,31 +4,36 @@
       title: "Quick Sets",
       description: "A web implementation of the game SET",
       url: "https://ariymarkowitz.github.io/quick-sets/",
-      thumbnail: "/thumbnails/quicksets.png"
+      thumbnail: "/thumbnails/quicksets.png",
+      tag: "Game"
     },
     {
       title: "Ripple",
       description: "Abstract art",
       url: "https://ariymarkowitz.github.io/art/ripple/",
-      thumbnail: "/thumbnails/ripple.png"
+      thumbnail: "/thumbnails/ripple.png",
+      tag: "Art"
     },
     {
       title: "Voidpool",
       description: "Enter the void",
       url: "ariymarkowitz.github.io/art/voidpool/",
-      thumbnail: "/thumbnails/voidpool.png"
+      thumbnail: "/thumbnails/voidpool.png",
+      tag: "Art"
     },
     {
       title: "Hyperbolic space visualiser",
       description: "Visualisation of isometry groups of hyperbolic space",
       url: "https://ariymarkowitz.github.io/H3-Visualiser/",
-      thumbnail: "/thumbnails/h3.png"
+      thumbnail: "/thumbnails/h3.png",
+      tag: "Math"
     },
     {
       title: "Bruhat-Tits tree visualiser",
       description: "Visualisation of isometry groups of Bruhat-Tits trees",
       url: "https://ariymarkowitz.github.io/Bruhat-Tits-Tree-Visualiser/",
-      thumbnail: "/thumbnails/btt.png"
+      thumbnail: "/thumbnails/btt.png",
+      tag: "Math"
     }
   ];
 </script>
@@ -48,7 +53,10 @@
         <div class="thumb-wrapper">
           <img class="thumb" src={project.thumbnail} alt={project.title} />
         </div>
-        <span class="title">{project.title}</span>
+        <div class="card-title-row">
+          <span class="title">{project.title}</span>
+          <span class="tag">{project.tag}</span>
+        </div>
         <p class="desc">{project.description}</p>
       </a>
     {/each}
@@ -89,11 +97,29 @@
   }
 
   .thumb-wrapper {
+    position: relative;
     border: 2px solid var(--accent);
     border-radius: 4px;
     overflow: hidden;
     margin-bottom: 0.4em;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .card-title-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5em;
+  }
+
+  .tag {
+    flex-shrink: 0;
+    background-color: var(--accent);
+    color: var(--bg);
+    font-size: 0.65em;
+    font-weight: 600;
+    padding: 0.15em 0.5em;
+    border-radius: 2px;
   }
 
   .card:hover .thumb-wrapper {
