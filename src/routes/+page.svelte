@@ -89,8 +89,9 @@
     border-top: 2px solid var(--accent);
     border-right: 2px solid var(--accent);
     border-radius: 2px;
-    margin: -14px -2em -3em -1em;
+    margin: -13px -2em -3em -1em;
     padding: 1em 3em  3em 1em;
+    box-shadow: 4px 4px 0 var(--highlight);
   }
 
   .ink-frame::after {
@@ -104,11 +105,29 @@
     pointer-events: none;
   }
 
+  .ink-frame::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      var(--accent) 0,
+      var(--accent) 3px,
+      var(--bg) 3px,
+      var(--bg) 6px
+    );
+    pointer-events: none;
+    /* box-shadow: 0 2px 0 var(--accent); */
+  }
+
   .projects h2 {
     font-size: 1.2em;
     font-weight: 600;
     color: var(--accent);
-    margin: 1.5em 0 1em;
+    margin: 1.2em 0 1em;
   }
 
   .grid {
@@ -153,7 +172,7 @@
 
   .card:hover .thumb-wrapper {
     transform: scale(1.05);
-    box-shadow: 4px 4px 0 0 rgba(30, 13, 98, 0.4);
+    box-shadow: 4px 4px 0 0 var(--highlight);
   }
 
   .card:hover .thumb {
