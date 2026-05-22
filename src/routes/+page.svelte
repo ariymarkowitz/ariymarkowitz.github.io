@@ -15,7 +15,7 @@
     },
     {
       title: "Apeirogon",
-      description: "",
+      description: "Mathematical art",
       url: "/images/apeirogon.jpg",
       thumbnail: "/thumbnails/apeirogon.png",
       tag: "Art"
@@ -60,7 +60,6 @@
   </p>
 
   <section class="projects">
-    <h2>Projects</h2>
     <div class="grid">
       {#each projects as project}
         <a class="card" href={project.url} target="_blank" rel="noopener noreferrer">
@@ -95,7 +94,7 @@
     border-bottom: 1px solid rgb(222, 216, 206);
     border-radius: 2px;
     margin: -13px -2em 0 -1em;
-    padding: 1em 3em  3em 1em;
+    padding: 6px 3em  3em 1em;
     box-shadow: 4px 4px 0 var(--highlight);
   }
 
@@ -118,11 +117,12 @@
     pointer-events: none;
   }
 
-  .projects h2 {
-    font-size: 1.2em;
-    font-weight: 600;
-    color: var(--accent);
-    margin: 1.2em 0 1em;
+  .frame>p {
+    margin-top: 1.63em;
+  }
+
+  .projects {
+    margin-top: 2em;
   }
 
   .grid {
