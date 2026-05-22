@@ -52,7 +52,7 @@
 </script>
 
 <h1 id="name" title="Ari Markowitz">Ari Markowitz</h1>
-<div class="ink-frame">
+<main class="frame">
   <p>
     Hi, I'm Ari. I recently completed my PhD at the University of Auckland.
     I like maths, design, and programming. I make web apps and games sometimes.
@@ -75,7 +75,7 @@
       {/each}
     </div>
   </section>
-</div>
+</main>
 
 <style>
   #name {
@@ -84,30 +84,21 @@
     color: var(--accent);
   }
 
-  .ink-frame {
+  .frame {
+    flex: 1;
     position: relative;
     background-color: var(--bg);
     border-top: 2px solid var(--accent);
     border-right: 2px solid var(--accent);
     border-left: 1px solid rgb(222, 216, 206);
+    border-bottom: 1px solid rgb(222, 216, 206);
     border-radius: 2px;
-    margin: -13px -2em -3em -1em;
+    margin: -13px -2em 0 -1em;
     padding: 1em 3em  3em 1em;
     box-shadow: 4px 4px 0 var(--highlight);
   }
 
-  .ink-frame::after {
-    content: '';
-    position: fixed;
-    bottom: 0;
-    right: 1em;
-    width: 2px;
-    height: calc(100vh - 10em);
-    background-color: var(--accent);
-    pointer-events: none;
-  }
-
-  .ink-frame::before {
+  .frame::before {
     content: '';
     position: absolute;
     top: 0;

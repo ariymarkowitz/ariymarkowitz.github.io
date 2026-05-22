@@ -16,6 +16,12 @@
 </div>
 
 <style>
+	.layout {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+	}
+
 	:global(:root) {
 		--bg: rgb(255, 248, 232);
 		--dither: rgb(222, 220, 218);
@@ -26,6 +32,8 @@
 	:global(body) {
 		margin: 0;
 		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
 		background-color: var(--bg);
 		overflow-x: hidden;
 		padding: 1em 3em 0 3em;
