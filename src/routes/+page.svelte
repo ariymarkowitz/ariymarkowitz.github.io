@@ -86,8 +86,10 @@
 
   .ink-frame {
     position: relative;
+    background-color: var(--bg);
     border-top: 2px solid var(--accent);
     border-right: 2px solid var(--accent);
+    border-left: 1px solid rgb(222, 216, 206);
     border-radius: 2px;
     margin: -13px -2em -3em -1em;
     padding: 1em 3em  3em 1em;
