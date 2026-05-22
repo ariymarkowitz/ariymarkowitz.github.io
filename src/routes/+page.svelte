@@ -120,7 +120,6 @@
       var(--bg) 6px
     );
     pointer-events: none;
-    /* box-shadow: 0 2px 0 var(--accent); */
   }
 
   .projects h2 {
