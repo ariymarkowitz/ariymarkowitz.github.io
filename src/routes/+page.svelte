@@ -54,7 +54,7 @@
 <h1 id="name" title="Ari Markowitz">Ari Markowitz</h1>
 <div class="ink-frame">
   <p>
-    My name is Ari. I recently completed my PhD at the University of Auckland.
+    Hi, I'm Ari. I recently completed my PhD at the University of Auckland.
     I like maths, design, and programming. I make web apps and games sometimes.
   </p>
 
@@ -89,8 +89,8 @@
     border-top: 2px solid var(--accent);
     border-right: 2px solid var(--accent);
     border-radius: 2px;
-    margin: -18.5px -2em -3em -1px;
-    padding: 28.5px 3em 0 1px;
+    margin: -14px -2em -3em -1em;
+    padding: 1em 3em  3em 1em;
   }
 
   .ink-frame::after {
@@ -105,10 +105,10 @@
   }
 
   .projects h2 {
-    font-size: 1.1em;
+    font-size: 1.2em;
     font-weight: 600;
     color: var(--accent);
-    margin: 1.5em 0 0.75em;
+    margin: 1.5em 0 1em;
   }
 
   .grid {
