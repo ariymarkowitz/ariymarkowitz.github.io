@@ -39,14 +39,14 @@
       description: "Visualisation of isometry groups of hyperbolic space",
       url: "https://ariymarkowitz.github.io/H3-Visualiser/",
       thumbnail: "/thumbnails/h3.png",
-      tag: "Math"
+      tag: "Maths"
     },
     {
       title: "Bruhat-Tits tree visualiser",
       description: "Visualisation of isometry groups of Bruhat-Tits trees",
       url: "https://ariymarkowitz.github.io/Bruhat-Tits-Tree-Visualiser/",
       thumbnail: "/thumbnails/btt.png",
-      tag: "Math"
+      tag: "Maths"
     }
   ];
 </script>
@@ -55,6 +55,7 @@
 <main class="frame">
   <p>
     Hi, I'm Ari. I recently completed my PhD at the University of Auckland.
+    I am currently located in Melbourne, Australia.
     I like maths, design, and programming. I make web apps and games sometimes.
   </p>
 
