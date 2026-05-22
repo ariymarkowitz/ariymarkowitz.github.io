@@ -45,29 +45,30 @@
 </script>
 
 <h1 id="name" title="Ari Markowitz">Ari Markowitz</h1>
-<hr />
-<p>
-  My name is Ari. I recently completed my PhD at the University of Auckland.
-  I like maths, design, and programming. I make web apps and games sometimes.
-</p>
+<div class="ink-frame">
+  <p>
+    My name is Ari. I recently completed my PhD at the University of Auckland.
+    I like maths, design, and programming. I make web apps and games sometimes.
+  </p>
 
-<section class="projects">
-  <h2>Projects</h2>
-  <div class="grid">
-    {#each projects as project}
-      <a class="card" href={project.url} target="_blank" rel="noopener noreferrer">
-        <div class="thumb-wrapper">
-          <img class="thumb" src={project.thumbnail} alt={project.title} />
-        </div>
-        <div class="card-title-row">
-          <span class="title">{project.title}</span>
-          <span class="tag" style="--tag-color: {tagColors[project.tag]}; background-color: {tagColors[project.tag]}">{project.tag}</span>
-        </div>
-        <p class="desc">{project.description}</p>
-      </a>
-    {/each}
-  </div>
-</section>
+  <section class="projects">
+    <h2>Projects</h2>
+    <div class="grid">
+      {#each projects as project}
+        <a class="card" href={project.url} target="_blank" rel="noopener noreferrer">
+          <div class="thumb-wrapper">
+            <img class="thumb" src={project.thumbnail} alt={project.title} />
+          </div>
+          <div class="card-title-row">
+            <span class="title">{project.title}</span>
+            <span class="tag" style="--tag-color: {tagColors[project.tag]}; background-color: {tagColors[project.tag]}">{project.tag}</span>
+          </div>
+          <p class="desc">{project.description}</p>
+        </a>
+      {/each}
+    </div>
+  </section>
+</div>
 
 <style>
   #name {
@@ -76,12 +77,24 @@
     color: var(--accent);
   }
 
-  hr {
-    height: 2px;
-    border: none;
-    border-radius: 22px;
+  .ink-frame {
+    position: relative;
+    border-top: 2px solid var(--accent);
+    border-right: 2px solid var(--accent);
+    border-radius: 2px;
+    margin: -18.5px -2em -3em -1px;
+    padding: 28.5px 3em 3em 1px;
+  }
+
+  .ink-frame::after {
+    content: '';
+    position: fixed;
+    bottom: 0;
+    right: 1em;
+    width: 2px;
+    height: calc(100vh - 10em);
     background-color: var(--accent);
-    margin: -18.5px -3em 30px -1px;
+    pointer-events: none;
   }
 
   .projects h2 {
