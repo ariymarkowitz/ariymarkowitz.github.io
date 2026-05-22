@@ -23,7 +23,7 @@
     {
       title: "Voidpool",
       description: "Enter the void",
-      url: "ariymarkowitz.github.io/art/voidpool/",
+      url: "https://ariymarkowitz.github.io/art/voidpool/",
       thumbnail: "/thumbnails/voidpool.png",
       tag: "Art"
     },
@@ -40,6 +40,13 @@
       url: "https://ariymarkowitz.github.io/Bruhat-Tits-Tree-Visualiser/",
       thumbnail: "/thumbnails/btt.png",
       tag: "Math"
+    },
+    {
+      title: "Apeirogon",
+      description: "",
+      url: "/images/apeirogon.jpg",
+      thumbnail: "/thumbnails/apeirogon.png",
+      tag: "Art"
     }
   ];
 </script>
@@ -83,7 +90,7 @@
     border-right: 2px solid var(--accent);
     border-radius: 2px;
     margin: -18.5px -2em -3em -1px;
-    padding: 28.5px 3em 3em 1px;
+    padding: 28.5px 3em 0 1px;
   }
 
   .ink-frame::after {
@@ -121,6 +128,7 @@
     border-radius: 4px;
     overflow: hidden;
     margin-bottom: 0.4em;
+    aspect-ratio: 16 / 9;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 
@@ -155,9 +163,9 @@
   .thumb {
     display: block;
     width: 100%;
-    aspect-ratio: 16 / 9;
+    height: 100%;
     object-fit: cover;
-
+    object-position: center;
     transition: transform 0.3s ease;
   }
 

@@ -27,6 +27,7 @@
 		background-color: var(--bg);
 		overflow-x: hidden;
 		padding: 3em;
+		box-sizing: border-box;
 
 		font-family: "Libertinus Serif", serif;
 		font-size: 20px;
