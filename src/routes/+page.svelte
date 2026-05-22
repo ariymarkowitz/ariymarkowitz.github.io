@@ -119,6 +119,8 @@
       var(--bg) 3px,
       var(--bg) 6px
     );
+    background-size: 8.4853px 8.4853px;
+    background-position: left top;
     pointer-events: none;
   }
 
