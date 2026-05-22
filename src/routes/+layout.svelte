@@ -25,7 +25,7 @@
 		margin: 0;
 		min-height: 100vh;
 		background-color: var(--bg);
-		overflow: hidden;
+		overflow-x: hidden;
 		padding: 3em;
 
 		font-family: "Libertinus Serif", serif;
