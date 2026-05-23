@@ -36,7 +36,7 @@
 		flex-direction: column;
 		background-color: var(--bg);
 		overflow-x: hidden;
-		padding: 1em 3em 0 3em;
+		padding: 1em 1em 0 2em;
 		box-sizing: border-box;
 
 		font-family: "Libertinus Serif", serif;

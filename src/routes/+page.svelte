@@ -79,7 +79,7 @@
 
 <style>
   #name {
-    margin: 0 0 -0.5ex 0.5em;
+    margin: 0 0 -0.5ex 1em;
     font-size: clamp(22px, 7.5vw, 40px);
     color: var(--accent);
     line-height: 1;
@@ -94,7 +94,7 @@
     border-left: 1px solid rgb(222, 216, 206);
     border-bottom: 1px solid rgb(222, 216, 206);
     border-radius: 2px;
-    margin: 6px -2em 0 -1em;
+    margin: 6px 0 0 0;
     padding: 6px 2em 3em 2em;
     box-shadow: 4px 4px 0 var(--highlight);
   }
