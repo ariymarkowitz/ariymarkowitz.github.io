@@ -94,7 +94,7 @@
     border-left: 1px solid rgb(222, 216, 206);
     border-bottom: 1px solid rgb(222, 216, 206);
     border-radius: 2px;
-    margin: 4px -2em 0 -1em;
+    margin: 6px -2em 0 -1em;
     padding: 6px 2em 3em 2em;
     box-shadow: 4px 4px 0 var(--highlight);
   }
