@@ -79,7 +79,7 @@
 
 <style>
   #name {
-    margin: 0;
+    margin: 0 0 0 0.5em;
     font-size: 40px;
     color: var(--accent);
   }
@@ -94,7 +94,7 @@
     border-bottom: 1px solid rgb(222, 216, 206);
     border-radius: 2px;
     margin: -13px -2em 0 -1em;
-    padding: 6px 3em  3em 1em;
+    padding: 6px 2em 3em 2em;
     box-shadow: 4px 4px 0 var(--highlight);
   }
 
@@ -127,7 +127,7 @@
 
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, 200px);
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 1.25em;
   }
 
