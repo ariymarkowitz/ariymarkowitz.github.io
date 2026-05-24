@@ -1,9 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { BAYER_8, DITHER_CELL, DITHER_DENSITY } from '$lib/dither-pattern';
 
-	const GRID = 1.5;
-	const DOT_SIZE = 1.5;
-	const DENSITY = 9;
 	const R = 50;
 	const R2 = R * R;
 	const K_SPRING = 10;
@@ -15,17 +13,6 @@
 	const TILE = 64;
 	const REST_DIST2 = 0.01;
 	const REST_VEL2 = 0.01;
-
-	const BAYER_8 = [
-		[ 0, 32,  8, 40,  2, 34, 10, 42],
-		[48, 16, 56, 24, 50, 18, 58, 26],
-		[12, 44,  4, 36, 14, 46,  6, 38],
-		[60, 28, 52, 20, 62, 30, 54, 22],
-		[ 3, 35, 11, 43,  1, 33,  9, 41],
-		[51, 19, 59, 27, 49, 17, 57, 25],
-		[15, 47,  7, 39, 13, 45,  5, 37],
-		[63, 31, 55, 23, 61, 29, 53, 21],
-	];
 
 	let canvas: HTMLCanvasElement;
 
@@ -116,23 +103,23 @@
 			canvas.style.height = viewH + 'px';
 			gl!.viewport(0, 0, canvas.width, canvas.height);
 			gl!.uniform2f(uResolution, viewW, viewH);
-			gl!.uniform1f(uPointSize, DOT_SIZE * dpr);
+			gl!.uniform1f(uPointSize, DITHER_CELL * dpr);
 
 			tilesX = Math.ceil(viewW / TILE);
 			tilesY = Math.ceil(viewH / TILE);
 			numTiles = tilesX * tilesY;
 
-			const cols = Math.ceil(viewW / GRID) + 1;
-			const rows = Math.ceil(viewH / GRID) + 1;
+			const cols = Math.ceil(viewW / DITHER_CELL) + 1;
+			const rows = Math.ceil(viewH / DITHER_CELL) + 1;
 
 			// Pass 1: count dots per tile.
 			tileCount = new Int32Array(numTiles);
 			let total = 0;
 			for (let r = 0; r < rows; r++) {
 				for (let c = 0; c < cols; c++) {
-					if (BAYER_8[r % 8][c % 8] < DENSITY) {
-						const x = c * GRID + GRID / 2;
-						const y = r * GRID + GRID / 2;
+					if (BAYER_8[r % 8][c % 8] < DITHER_DENSITY) {
+						const x = c * DITHER_CELL + DITHER_CELL / 2;
+						const y = r * DITHER_CELL + DITHER_CELL / 2;
 						const tc = Math.min(Math.floor(x / TILE), tilesX - 1);
 						const tr = Math.min(Math.floor(y / TILE), tilesY - 1);
 						tileCount[tr * tilesX + tc]++;
@@ -155,9 +142,9 @@
 			const cursor = new Int32Array(numTiles);
 			for (let r = 0; r < rows; r++) {
 				for (let c = 0; c < cols; c++) {
-					if (BAYER_8[r % 8][c % 8] < DENSITY) {
-						const x = c * GRID + GRID / 2;
-						const y = r * GRID + GRID / 2;
+					if (BAYER_8[r % 8][c % 8] < DITHER_DENSITY) {
+						const x = c * DITHER_CELL + DITHER_CELL / 2;
+						const y = r * DITHER_CELL + DITHER_CELL / 2;
 						const tc = Math.min(Math.floor(x / TILE), tilesX - 1);
 						const tr = Math.min(Math.floor(y / TILE), tilesY - 1);
 						const t = tr * tilesX + tc;

@@ -1,37 +1,25 @@
 <script lang="ts">
 	import favicon from '$lib/assets/favicon.svg';
 	import Dither from '$lib/Dither.svelte';
+	import { BAYER_8, DITHER_CELL, DITHER_DENSITY } from '$lib/dither-pattern';
 
 	let { children } = $props();
-
-	// 0–64. Number of cells (out of 64) filled in the 8x8 Bayer matrix.
-	const ditherDensity = 9;
-
-	const BAYER_8 = [
-		[ 0, 32,  8, 40,  2, 34, 10, 42],
-		[48, 16, 56, 24, 50, 18, 58, 26],
-		[12, 44,  4, 36, 14, 46,  6, 38],
-		[60, 28, 52, 20, 62, 30, 54, 22],
-		[ 3, 35, 11, 43,  1, 33,  9, 41],
-		[51, 19, 59, 27, 49, 17, 57, 25],
-		[15, 47,  7, 39, 13, 45,  5, 37],
-		[63, 31, 55, 23, 61, 29, 53, 21],
-	];
 
 	function ditherMask(density: number): string {
 		const rects: string[] = [];
 		for (let row = 0; row < 8; row++) {
 			for (let col = 0; col < 8; col++) {
 				if (BAYER_8[row][col] < density) {
-					rects.push(`<rect x='${col * 2}' y='${row * 2}' width='2' height='2' fill='white'/>`);
+					rects.push(`<rect x='${col}' y='${row}' width='1' height='1' fill='white'/>`);
 				}
 			}
 		}
-		const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'>${rects.join('')}</svg>`;
+		const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='8' height='8'>${rects.join('')}</svg>`;
 		return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
 	}
 
-	const ditherMaskUrl = ditherMask(ditherDensity);
+	const ditherMaskUrl = ditherMask(DITHER_DENSITY);
+	const ditherMaskSize = `${DITHER_CELL * 8}px`;
 </script>
 
 <svelte:head>
@@ -39,7 +27,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css2?family=Libertinus+Serif:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
-	{@html `<style>:root { --dither-mask: ${ditherMaskUrl}; }</style>`}
+	{@html `<style>:root { --dither-mask: ${ditherMaskUrl}; --dither-mask-size: ${ditherMaskSize}; }</style>`}
 </svelte:head>
 
 <Dither />
@@ -86,8 +74,8 @@
 		background-color: var(--dither);
 		-webkit-mask-image: var(--dither-mask);
 		mask-image: var(--dither-mask);
-		-webkit-mask-size: 12px 12px;
-		mask-size: 12px 12px;
+		-webkit-mask-size: var(--dither-mask-size);
+		mask-size: var(--dither-mask-size);
 		z-index: -1;
 		pointer-events: none;
 	}
