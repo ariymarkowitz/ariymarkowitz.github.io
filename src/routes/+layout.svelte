@@ -1,5 +1,6 @@
 <script lang="ts">
 	import favicon from '$lib/assets/favicon.svg';
+	import Dither from '$lib/Dither.svelte';
 
 	let { children } = $props();
 
@@ -41,6 +42,8 @@
 	{@html `<style>:root { --dither-mask: ${ditherMaskUrl}; }</style>`}
 </svelte:head>
 
+<Dither />
+
 <div class="layout">
 	{@render children()}
 </div>
@@ -76,7 +79,7 @@
 		line-height: 1.5;
 	}
 
-	:global(body::before) {
+	:global(body:not(.dither-active)::before) {
 		content: '';
 		position: fixed;
 		inset: 0;
