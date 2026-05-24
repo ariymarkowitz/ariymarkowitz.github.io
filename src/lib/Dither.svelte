@@ -4,11 +4,11 @@
 	const GRID = 1.5;
 	const DOT_SIZE = 1.5;
 	const DENSITY = 9;
-	const R = 20;
+	const R = 50;
 	const R2 = R * R;
 	const K_SPRING = 10;
 	const K_DAMP = 8;
-	const K_REPEL = 800;
+	const K_ROTATE = 500;
 	const DPR_CAP = 2;
 	const DT = 1 / 60;
 	const FAR_AWAY = 1e9;
@@ -189,8 +189,27 @@
 
 		const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+		const occluder = document.querySelector('.frame') as HTMLElement | null;
+		let occL = 0, occT = 0, occR = 0, occB = 0;
+		function updateOccluder() {
+			if (!occluder) { occL = occT = occR = occB = 0; return; }
+			const r = occluder.getBoundingClientRect();
+			occL = r.left; occT = r.top; occR = r.right; occB = r.bottom;
+		}
+		updateOccluder();
+
+		function mouseDeepInOccluder() {
+			return (
+				occR - occL > 2 * R &&
+				occB - occT > 2 * R &&
+				mouseX >= occL + R && mouseX <= occR - R &&
+				mouseY >= occT + R && mouseY <= occB - R
+			);
+		}
+
 		function activatePointerTiles() {
 			if (mouseX === FAR_AWAY) return;
+			if (mouseDeepInOccluder()) return;
 			const minC = Math.max(0, Math.floor((mouseX - R) / TILE));
 			const maxC = Math.min(tilesX - 1, Math.floor((mouseX + R) / TILE));
 			const minR = Math.max(0, Math.floor((mouseY - R) / TILE));
@@ -220,8 +239,10 @@
 			mouseY = FAR_AWAY;
 		}
 
-		const ro = new ResizeObserver(() => rebuild());
+		const ro = new ResizeObserver(() => { rebuild(); updateOccluder(); });
 		ro.observe(document.documentElement);
+
+		window.addEventListener('scroll', updateOccluder, { passive: true });
 
 		if (!reducedMotion) {
 			window.addEventListener('pointermove', onPointerMove, { passive: true });
@@ -233,8 +254,9 @@
 		function frame() {
 			activatePointerTiles();
 
-			const mx = mouseX;
-			const my = mouseY;
+			const occluded = mouseDeepInOccluder();
+			const mx = occluded ? FAR_AWAY : mouseX;
+			const my = occluded ? FAR_AWAY : mouseY;
 			let writeIdx = 0;
 
 			for (let i = 0; i < activeCount; i++) {
@@ -282,9 +304,9 @@
 						if (dist2 < R2) {
 							const falloff = 1 - dist2 / R2;
 							const invD = 1 / Math.sqrt(dist2 + 1e-4);
-							const f = K_REPEL * falloff;
-							fx += mdx * invD * f;
-							fy += mdy * invD * f;
+							const f = K_ROTATE * falloff;
+							fx += -mdy * invD * f;
+							fy += mdx * invD * f;
 						}
 					}
 
@@ -344,6 +366,7 @@
 			window.removeEventListener('pointermove', onPointerMove);
 			window.removeEventListener('pointerdown', onPointerMove);
 			window.removeEventListener('pointercancel', onPointerLeave);
+			window.removeEventListener('scroll', updateOccluder);
 			document.removeEventListener('pointerleave', onPointerLeave);
 			document.body.classList.remove('dither-active');
 		};
