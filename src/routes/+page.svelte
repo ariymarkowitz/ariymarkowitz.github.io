@@ -91,8 +91,8 @@
     background-color: var(--bg);
     border-top: 2px solid var(--accent);
     border-right: 2px solid var(--accent);
-    border-left: 1px solid rgb(222, 216, 206);
-    border-bottom: 1px solid rgb(222, 216, 206);
+    border-left: 1px solid var(--shading);
+    border-bottom: 1px solid var(--shading);
     border-radius: 2px;
     margin: 6px 0 0 0;
     padding: 6px 2em 3em 2em;

@@ -54,9 +54,10 @@
 
 	:global(:root) {
 		--bg: rgb(255, 248, 232);
-		--dither: rgb(222, 220, 218);
+		--dither: rgb(217, 206, 195);
 		--accent: rgb(30, 13, 98);
 		--highlight: rgba(30, 13, 98, 0.4);
+		--shading: rgba(107, 75, 0, 0.2);
 	}
 
 	:global(body) {
