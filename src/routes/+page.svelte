@@ -92,9 +92,9 @@
     border-top: 2px solid var(--accent);
     border-right: 2px solid var(--accent);
     border-left: 1px solid var(--shading);
-    border-bottom: 1px solid var(--shading);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.6);
     border-radius: 2px;
-    margin: 6px 0 0 0;
+    margin: 6px 0 3em 0;
     padding: 6px 2em 3em 2em;
     box-shadow: 4px 4px 0 var(--highlight);
   }
