@@ -4,6 +4,7 @@
 
 	const R = 50;
 	const R2 = R * R;
+	const PADDING = R;
 	const K_SPRING = 10;
 	const K_DAMP = 8;
 	const K_ROTATE = 500;
@@ -23,13 +24,12 @@
 	}
 
 	onMount(() => {
-		const gl = canvas.getContext('webgl', { antialias: false, alpha: false, premultipliedAlpha: false });
+		const gl = canvas.getContext('webgl', { antialias: false, alpha: true, premultipliedAlpha: false });
 		if (!gl) return;
 
 		document.body.classList.add('dither-active');
 
 		const cssVars = getComputedStyle(document.documentElement);
-		const [br, bg, bb] = parseRgb(cssVars.getPropertyValue('--bg'));
 		const [dr, dg, db] = parseRgb(cssVars.getPropertyValue('--dither'));
 
 		const vsSrc = `
@@ -75,7 +75,7 @@
 		gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
 
 		gl.uniform3f(uColor, dr, dg, db);
-		gl.clearColor(br, bg, bb, 1);
+		gl.clearColor(0, 0, 0, 0);
 
 		let restXY = new Float32Array(0);
 		let posXY = new Float32Array(0);
@@ -94,34 +94,37 @@
 		let activeCount = 0;
 
 		function rebuild() {
-			viewW = window.innerWidth;
-			viewH = window.innerHeight;
+			const rect = canvas.getBoundingClientRect();
+			viewW = rect.width;
+			viewH = rect.height;
 			const dpr = Math.min(window.devicePixelRatio || 1, DPR_CAP);
 			canvas.width = Math.round(viewW * dpr);
 			canvas.height = Math.round(viewH * dpr);
-			canvas.style.width = viewW + 'px';
-			canvas.style.height = viewH + 'px';
 			gl!.viewport(0, 0, canvas.width, canvas.height);
 			gl!.uniform2f(uResolution, viewW, viewH);
 			gl!.uniform1f(uPointSize, DITHER_CELL * dpr);
 
-			tilesX = Math.ceil(viewW / TILE);
-			tilesY = Math.ceil(viewH / TILE);
+			tilesX = Math.ceil((viewW + 2 * PADDING) / TILE);
+			tilesY = Math.ceil((viewH + 2 * PADDING) / TILE);
 			numTiles = tilesX * tilesY;
 
-			const cols = Math.ceil(viewW / DITHER_CELL) + 1;
-			const rows = Math.ceil(viewH / DITHER_CELL) + 1;
+			const startCol = -Math.ceil(PADDING / DITHER_CELL);
+			const endCol = Math.ceil((viewW + PADDING) / DITHER_CELL) + 1;
+			const startRow = -Math.ceil(PADDING / DITHER_CELL);
+			const endRow = Math.ceil((viewH + PADDING) / DITHER_CELL) + 1;
 
 			// Pass 1: count dots per tile.
 			tileCount = new Int32Array(numTiles);
 			let total = 0;
-			for (let r = 0; r < rows; r++) {
-				for (let c = 0; c < cols; c++) {
-					if (BAYER_8[r % 8][c % 8] < DITHER_DENSITY) {
+			for (let r = startRow; r < endRow; r++) {
+				const br = ((r % 8) + 8) % 8;
+				for (let c = startCol; c < endCol; c++) {
+					const bc = ((c % 8) + 8) % 8;
+					if (BAYER_8[br][bc] < DITHER_DENSITY) {
 						const x = c * DITHER_CELL + DITHER_CELL / 2;
 						const y = r * DITHER_CELL + DITHER_CELL / 2;
-						const tc = Math.min(Math.floor(x / TILE), tilesX - 1);
-						const tr = Math.min(Math.floor(y / TILE), tilesY - 1);
+						const tc = Math.min(Math.floor((x + PADDING) / TILE), tilesX - 1);
+						const tr = Math.min(Math.floor((y + PADDING) / TILE), tilesY - 1);
 						tileCount[tr * tilesX + tc]++;
 						total++;
 					}
@@ -140,13 +143,15 @@
 			// Pass 2: place each dot into its tile's slot.
 			restXY = new Float32Array(count * 2);
 			const cursor = new Int32Array(numTiles);
-			for (let r = 0; r < rows; r++) {
-				for (let c = 0; c < cols; c++) {
-					if (BAYER_8[r % 8][c % 8] < DITHER_DENSITY) {
+			for (let r = startRow; r < endRow; r++) {
+				const br = ((r % 8) + 8) % 8;
+				for (let c = startCol; c < endCol; c++) {
+					const bc = ((c % 8) + 8) % 8;
+					if (BAYER_8[br][bc] < DITHER_DENSITY) {
 						const x = c * DITHER_CELL + DITHER_CELL / 2;
 						const y = r * DITHER_CELL + DITHER_CELL / 2;
-						const tc = Math.min(Math.floor(x / TILE), tilesX - 1);
-						const tr = Math.min(Math.floor(y / TILE), tilesY - 1);
+						const tc = Math.min(Math.floor((x + PADDING) / TILE), tilesX - 1);
+						const tr = Math.min(Math.floor((y + PADDING) / TILE), tilesY - 1);
 						const t = tr * tilesX + tc;
 						const idx = tileStart[t] + cursor[t]++;
 						restXY[idx * 2] = x;
@@ -197,10 +202,10 @@
 		function activatePointerTiles() {
 			if (mouseX === FAR_AWAY) return;
 			if (mouseDeepInOccluder()) return;
-			const minC = Math.max(0, Math.floor((mouseX - R) / TILE));
-			const maxC = Math.min(tilesX - 1, Math.floor((mouseX + R) / TILE));
-			const minR = Math.max(0, Math.floor((mouseY - R) / TILE));
-			const maxR = Math.min(tilesY - 1, Math.floor((mouseY + R) / TILE));
+			const minC = Math.max(0, Math.floor((mouseX - R + PADDING) / TILE));
+			const maxC = Math.min(tilesX - 1, Math.floor((mouseX + R + PADDING) / TILE));
+			const minR = Math.max(0, Math.floor((mouseY - R + PADDING) / TILE));
+			const maxR = Math.min(tilesY - 1, Math.floor((mouseY + R + PADDING) / TILE));
 			if (minC > maxC || minR > maxR) return;
 			for (let r = minR; r <= maxR; r++) {
 				for (let c = minC; c <= maxC; c++) {
@@ -257,8 +262,8 @@
 
 				const tc = t % tilesX;
 				const tr = (t - tc) / tilesX;
-				const tx0 = tc * TILE;
-				const ty0 = tr * TILE;
+				const tx0 = tc * TILE - PADDING;
+				const ty0 = tr * TILE - PADDING;
 				const tx1 = tx0 + TILE;
 				const ty1 = ty0 + TILE;
 				const influenced =
