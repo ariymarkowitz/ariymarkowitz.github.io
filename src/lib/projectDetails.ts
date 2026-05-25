@@ -20,6 +20,16 @@ export function hasProjectDetails(slug: string): boolean {
 export function getProjectDetailsHtml(slug: string): string | null {
   const raw = detailsBySlug[slug];
   if (raw === undefined) return null;
-  const html = marked.parse(raw, { async: false }) as string;
+
+  // Extract math before marked so it doesn't HTML-encode LaTeX special chars
+  const stash: string[] = [];
+  const escapemath = (src: string) =>
+    src
+      .replace(/\$\$([\s\S]*?)\$\$/g, (m) => { stash.push(m); return `\x00M${stash.length - 1}\x00`; })
+      .replace(/\$([^\n$]*?)\$/g,     (m) => { stash.push(m); return `\x00M${stash.length - 1}\x00`; });
+
+  const protected_ = escapemath(raw);
+  let html = marked.parse(protected_, { async: false }) as string;
+  html = html.replace(/\x00M(\d+)\x00/g, (_, i) => stash[+i]);
   return renderLatex(html);
 }

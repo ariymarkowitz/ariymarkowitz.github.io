@@ -117,8 +117,8 @@
     position: absolute;
     top: 0.4em;
     right: 0.4em;
-    width: 2.1em;
-    height: 2.1em;
+    width: 2em;
+    height: 2em;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -140,6 +140,9 @@
     mask-size: contain;
     mask-repeat: no-repeat;
     mask-position: center;
+
+    position: relative;
+    top: 0.1px;
   }
 
   .card:hover .info-btn,

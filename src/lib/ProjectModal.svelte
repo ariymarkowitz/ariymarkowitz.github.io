@@ -92,7 +92,7 @@
     cursor: pointer;
     font-size: 1.1em;
     color: var(--accent);
-    padding: 0.1em 0.3em;
+    padding: 0;
     line-height: 1;
     opacity: 0.7;
     flex-shrink: 0;
@@ -144,6 +144,10 @@
 
   .visit-btn:hover {
     opacity: 0.85;
+  }
+
+  :global(.katex) {
+    font-size: 1em;
   }
 
   :global(.math-error) {
