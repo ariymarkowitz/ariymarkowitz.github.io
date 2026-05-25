@@ -1,5 +1,12 @@
-import { marked } from 'marked';
+import { marked, Renderer } from 'marked';
 import { renderLatex } from './latex';
+
+const renderer = new Renderer();
+renderer.link = function({ href, title, tokens }) {
+  const content = this.parser.parseInline(tokens);
+  return `<a href="${href}"${title ? ` title="${title}"` : ''} target="_blank" rel="noopener noreferrer">${content}</a>`;
+};
+marked.use({ renderer });
 
 const modules = import.meta.glob('./project-details/*.md', {
   query: '?raw',

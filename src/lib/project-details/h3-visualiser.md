@@ -5,10 +5,10 @@ $\text{PSL}(2, \mathbb{C})$ (the group of $2\times 2$ invertible complex matrice
 When all of the entries are real, the group acts on 2-dimensional hyperbolic space. The real setting was the focus of a large part of my PhD research.
 
 Here are some interesting groups to look at:
-- [the Sanov subgroup](https://ariymarkowitz.github.io/H3-Visualiser/?d=10&a=1+0+2+0+0+0+1+0&showa=1&b=1+0+0+0+2+0+1+0&showb=1)
-- [the modular group](https://ariymarkowitz.github.io/H3-Visualiser/?d=10&a=1+0+1+0+0+0+1+0&showa=1&b=0+0+-1+0+1+0+1+0&showb=1)
-- [a nice pair of parabolic generators](https://ariymarkowitz.github.io/H3-Visualiser/?d=10&a=1+0+0+1+0+0+1+0&showa=1&b=1+0+0+0+1+0+1+0&showb=1)
-- [the fundamental group of the complement of the figure-8 knot](https://ariymarkowitz.github.io/H3-Visualiser/?d=10&a=1+0+1+0+0+0+1+0&showa=1&b=1+0+0+0+0.5+0.866+1+0&showb=1)
+- [The Sanov subgroup](https://ariymarkowitz.github.io/H3-Visualiser/?d=10&a=1+0+2+0+0+0+1+0&showa=1&b=1+0+0+0+2+0+1+0&showb=1)
+- [The modular group](https://ariymarkowitz.github.io/H3-Visualiser/?d=10&a=1+0+1+0+0+0+1+0&showa=1&b=0+0+-1+0+1+0+1+0&showb=1)
+- [A nice pair of parabolic generators](https://ariymarkowitz.github.io/H3-Visualiser/?d=10&a=1+0+0+1+0+0+1+0&showa=1&b=1+0+0+0+1+0+1+0&showb=1)
+- [The fundamental group of the complement of the figure-8 knot](https://ariymarkowitz.github.io/H3-Visualiser/?d=10&a=1+0+1+0+0+0+1+0&showa=1&b=1+0+0+0+0.5+0.866+1+0&showb=1)
 
 The app is designed for the browser. On mobile you should reduce the 'depth' if it runs slowly.
 
