@@ -24,7 +24,7 @@
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
-<div class="modal-overlay" onclick={handleOverlayClick} transition:fade={{ duration: 200, easing: cubicOut }}>
+<div class="modal-overlay" onclick={handleOverlayClick} transition:fade={{ duration: 150, easing: cubicOut }}>
   <div class="modal" role="dialog" aria-modal="true" aria-label={project.title} tabindex="-1">
     <div class="modal-header">
       <h2 class="modal-title">{project.title}</h2>
