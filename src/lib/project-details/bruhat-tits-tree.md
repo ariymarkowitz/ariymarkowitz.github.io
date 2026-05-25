@@ -2,7 +2,7 @@ This is a visualiser of the Bruhat-Tits tree over $\mathbb{Q}_p$, and the action
 
 ## $p$-adic numbers
 
-There are a couple of ways of defining the $p$-adic numbers for a prime $p$. One way is to consider the rationals $\mathbb{Q}$, and use a different metric (notion of 'distance'). Informally, a pair of $p$-adic numbers $x$ and $y$ are 'close' to each other when $x-y$ is a multiple of a large power of $p$. We may then take the completion, similar to the real numbers, to give a field and metric space $\mathbb{Q}_p$.
+There are a couple of ways of defining the $p$-adic numbers for a prime $p$. One way is to consider the rationals $\mathbb{Q}$, and use a different metric (notion of ‘distance’). Informally, a pair of $p$-adic numbers $x$ and $y$ are ‘close’ to each other when $x-y$ is a multiple of a large power of $p$. We may then take the completion, similar to the real numbers, to give a field and metric space $\mathbb{Q}_p$.
 
 The other way of describing the p-adic numbers is to consider them as the field of infinite expansions
 
@@ -44,11 +44,11 @@ Since the vertices are equivalence classes of lattices, the group $\mathrm{GL}(2
 
 ## Boundary of the tree
 
-If each vertex is a finite $p$-adic expansion, then an infinite path can be associated with an infinite $p$-adic expansion. Hence we may identify the 'boundary' of the tree with the projective $p$-adic line. (The point at infinity corresponds to following the 'reverse' path $[0]_n$ as $n \to -\infty$). An infinite ray on the tree is called an 'end', and if we fix the starting point of the ray then each end corresponds to a unique point on the boundary. This is shown in the visualisation by the fact that neighbours farther from the origin are exponentially closer together, so that every infinite ray converges to a unique point. (One may draw an analogy to, or represent this directly with, the Poincaré disk model of the hyperbolic plane.) Thus we can visualise the boundary of the tree. We see that $\mathrm{GL}(2, \mathbb{Q}_p)$ also acts on the projective $p$-adic line.
+If each vertex is a finite $p$-adic expansion, then an infinite path can be associated with an infinite $p$-adic expansion. Hence we may identify the ‘boundary’ of the tree with the projective $p$-adic line. (The point at infinity corresponds to following the ‘reverse’ path $[0]_n$ as $n \to -\infty$). An infinite ray on the tree is called an ‘end’, and if we fix the starting point of the ray then each end corresponds to a unique point on the boundary. This is shown in the visualisation by the fact that neighbours farther from the origin are exponentially closer together, so that every infinite ray converges to a unique point. (One may draw an analogy to, or represent this directly with, the Poincaré disk model of the hyperbolic plane.) Thus we can visualise the boundary of the tree. We see that $\mathrm{GL}(2, \mathbb{Q}_p)$ also acts on the projective $p$-adic line.
 
 ## Function fields
 
-The Bruhat-Tits tree can also be defined over a the field $\mathbb{F}_p((x))$ of formal Laurent series (infinite power series, with finitely many terms with negative exponent) over a finite field. We define a similar metric to the $p$-adic numbers; in this case, power series $f(x)$ and $g(x)$ are 'close' when $f(x)-g(x)$ is a multiple of a large power of $x$.
+The Bruhat-Tits tree can also be defined over a the field $\mathbb{F}_p((x))$ of formal Laurent series (infinite power series, with finitely many terms with negative exponent) over a finite field. We define a similar metric to the $p$-adic numbers; in this case, power series $f(x)$ and $g(x)$ are ‘close’ when $f(x)-g(x)$ is a multiple of a large power of $x$.
 
 The Laurent series and $p$-adic numbers have a lot of similarities, and together they classify the *non-Archimedean local fields*. The main factor that distinguishes them is their *characteristic*: The number of times you need to add 1 to itself to reach 0. The field of Laurent series $\mathbb{F}_p((x))$ has characteristic $p$. In $\mathbb{Q}_p$ you can add 1 to itself forever and never reach 0; for convenience we say that $\mathbb{Q}_p$ has characteristic 0.
 
