@@ -113,51 +113,33 @@
 			const startRow = -Math.ceil(PADDING / DITHER_CELL);
 			const endRow = Math.ceil((viewH + PADDING) / DITHER_CELL) + 1;
 
-			// Pass 1: count dots per tile.
-			tileCount = new Int32Array(numTiles);
+			const bucketsByTile: number[][] = Array.from({ length: numTiles }, () => []);
 			let total = 0;
 			for (let r = startRow; r < endRow; r++) {
 				const br = ((r % 8) + 8) % 8;
 				for (let c = startCol; c < endCol; c++) {
 					const bc = ((c % 8) + 8) % 8;
-					if (BAYER_8[br][bc] < DITHER_DENSITY) {
-						const x = c * DITHER_CELL + DITHER_CELL / 2;
-						const y = r * DITHER_CELL + DITHER_CELL / 2;
-						const tc = Math.min(Math.floor((x + PADDING) / TILE), tilesX - 1);
-						const tr = Math.min(Math.floor((y + PADDING) / TILE), tilesY - 1);
-						tileCount[tr * tilesX + tc]++;
-						total++;
-					}
+					if (BAYER_8[br][bc] >= DITHER_DENSITY) continue;
+					const x = c * DITHER_CELL + DITHER_CELL / 2;
+					const y = r * DITHER_CELL + DITHER_CELL / 2;
+					const tc = Math.max(0, Math.min(Math.floor((x + PADDING) / TILE), tilesX - 1));
+					const tr = Math.max(0, Math.min(Math.floor((y + PADDING) / TILE), tilesY - 1));
+					bucketsByTile[tr * tilesX + tc].push(x, y);
+					total++;
 				}
 			}
-			count = total;
 
-			// Prefix sum -> tileStart.
+			count = total;
+			restXY = new Float32Array(count * 2);
 			tileStart = new Int32Array(numTiles);
+			tileCount = new Int32Array(numTiles);
 			let acc = 0;
 			for (let t = 0; t < numTiles; t++) {
+				const bucket = bucketsByTile[t];
 				tileStart[t] = acc;
-				acc += tileCount[t];
-			}
-
-			// Pass 2: place each dot into its tile's slot.
-			restXY = new Float32Array(count * 2);
-			const cursor = new Int32Array(numTiles);
-			for (let r = startRow; r < endRow; r++) {
-				const br = ((r % 8) + 8) % 8;
-				for (let c = startCol; c < endCol; c++) {
-					const bc = ((c % 8) + 8) % 8;
-					if (BAYER_8[br][bc] < DITHER_DENSITY) {
-						const x = c * DITHER_CELL + DITHER_CELL / 2;
-						const y = r * DITHER_CELL + DITHER_CELL / 2;
-						const tc = Math.min(Math.floor((x + PADDING) / TILE), tilesX - 1);
-						const tr = Math.min(Math.floor((y + PADDING) / TILE), tilesY - 1);
-						const t = tr * tilesX + tc;
-						const idx = tileStart[t] + cursor[t]++;
-						restXY[idx * 2] = x;
-						restXY[idx * 2 + 1] = y;
-					}
-				}
+				tileCount[t] = bucket.length / 2;
+				restXY.set(bucket, acc * 2);
+				acc += bucket.length / 2;
 			}
 			posXY = new Float32Array(restXY);
 			velXY = new Float32Array(count * 2);
@@ -199,9 +181,8 @@
 			);
 		}
 
-		function activatePointerTiles() {
-			if (mouseX === FAR_AWAY) return;
-			if (mouseDeepInOccluder()) return;
+		function activatePointerTiles(occluded = mouseDeepInOccluder()) {
+			if (mouseX === FAR_AWAY || occluded) return;
 			const minC = Math.max(0, Math.floor((mouseX - R + PADDING) / TILE));
 			const maxC = Math.min(tilesX - 1, Math.floor((mouseX + R + PADDING) / TILE));
 			const minR = Math.max(0, Math.floor((mouseY - R + PADDING) / TILE));
@@ -236,17 +217,22 @@
 
 		window.addEventListener('scroll', updateOccluder, { passive: true });
 
-		if (!reducedMotion) {
-			window.addEventListener('pointermove', onPointerMove, { passive: true });
-			window.addEventListener('pointerdown', onPointerMove, { passive: true });
-			window.addEventListener('pointercancel', onPointerLeave, { passive: true });
-			document.addEventListener('pointerleave', onPointerLeave, { passive: true });
+		const move = onPointerMove as EventListener;
+		const leave = onPointerLeave as EventListener;
+		const pointerListeners: [EventTarget, string, EventListener][] = reducedMotion ? [] : [
+			[window, 'pointermove', move],
+			[window, 'pointerdown', move],
+			[window, 'pointercancel', leave],
+			[document, 'pointerleave', leave],
+		];
+		for (const [target, name, handler] of pointerListeners) {
+			target.addEventListener(name, handler, { passive: true });
 		}
 
 		function frame() {
-			activatePointerTiles();
-
 			const occluded = mouseDeepInOccluder();
+			activatePointerTiles(occluded);
+
 			const mx = occluded ? FAR_AWAY : mouseX;
 			const my = occluded ? FAR_AWAY : mouseY;
 			let writeIdx = 0;
@@ -324,20 +310,14 @@
 
 				if (influenced || !tileSettled) {
 					activeList[writeIdx++] = t;
-					gl!.bufferSubData(gl!.ARRAY_BUFFER, byteOffset, slice);
 				} else {
-					// Snap to exact rest, upload final state, deactivate.
-					for (let d = s; d < s + n; d++) {
-						const ix = d * 2;
-						const iy = ix + 1;
-						posXY[ix] = restXY[ix];
-						posXY[iy] = restXY[iy];
-						velXY[ix] = 0;
-						velXY[iy] = 0;
-					}
-					gl!.bufferSubData(gl!.ARRAY_BUFFER, byteOffset, slice);
+					const begin = s * 2;
+					const end = (s + n) * 2;
+					posXY.set(restXY.subarray(begin, end), begin);
+					velXY.fill(0, begin, end);
 					tileActive[t] = 0;
 				}
+				gl!.bufferSubData(gl!.ARRAY_BUFFER, byteOffset, slice);
 			}
 
 			activeCount = writeIdx;
@@ -355,11 +335,10 @@
 		return () => {
 			cancelAnimationFrame(raf);
 			ro.disconnect();
-			window.removeEventListener('pointermove', onPointerMove);
-			window.removeEventListener('pointerdown', onPointerMove);
-			window.removeEventListener('pointercancel', onPointerLeave);
+			for (const [target, name, handler] of pointerListeners) {
+				target.removeEventListener(name, handler);
+			}
 			window.removeEventListener('scroll', updateOccluder);
-			document.removeEventListener('pointerleave', onPointerLeave);
 			document.body.classList.remove('dither-active');
 		};
 	});
