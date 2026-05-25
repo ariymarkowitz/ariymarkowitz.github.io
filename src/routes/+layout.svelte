@@ -47,7 +47,6 @@
     --bg: rgb(255, 248, 232);
     --accent: rgb(30, 13, 98);
     --highlight: rgba(30, 13, 98, 0.4);
-    --shading: rgba(107, 75, 0, 0.2);
   }
 
   :global(body) {

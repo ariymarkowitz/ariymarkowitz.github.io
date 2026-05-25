@@ -51,7 +51,9 @@
   ];
 </script>
 
-<h1 id="name" title="Ari Markowitz">Ari Markowitz</h1>
+<div class="title-box">
+  <h1 id="name" title="Ari Markowitz">Ari Markowitz</h1>
+</div>
 <main class="frame">
   <p>
     Hi, I'm Ari. I recently completed my PhD at the University of Auckland.
@@ -78,8 +80,12 @@
 </main>
 
 <style>
+  .title-box {
+    padding: 0 0 0 2em;
+  }
+
   #name {
-    margin: 0 0 -0.5ex 1em;
+    margin: 0 0 -0.4ex 0;
     font-size: clamp(22px, 7.5vw, 40px);
     color: var(--accent);
     line-height: 1;
@@ -91,7 +97,7 @@
     background-color: var(--bg);
     border-top: 2px solid var(--accent);
     border-right: 2px solid var(--accent);
-    border-left: 1px solid var(--shading);
+    border-left: 1px solid rgba(107, 75, 0, 0.2);
     border-bottom: 1px solid rgba(0, 0, 0, 0.6);
     border-radius: 2px;
     margin: 6px 0 3em 0;
