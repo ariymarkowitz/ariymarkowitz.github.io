@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { BAYER_8, DITHER_CELL, DITHER_DENSITY } from '$lib/dither-pattern';
+	import { BAYER_8, DITHER_CELL, DITHER_COLOR, DITHER_DENSITY } from '$lib/dither-pattern';
 
 	const R = 50;
 	const R2 = R * R;
@@ -17,20 +17,13 @@
 
 	let canvas: HTMLCanvasElement;
 
-	function parseRgb(s: string): [number, number, number] {
-		const m = s.match(/\d+(\.\d+)?/g);
-		if (!m || m.length < 3) return [0, 0, 0];
-		return [parseFloat(m[0]) / 255, parseFloat(m[1]) / 255, parseFloat(m[2]) / 255];
-	}
-
 	onMount(() => {
 		const gl = canvas.getContext('webgl', { antialias: false, alpha: true, premultipliedAlpha: false });
 		if (!gl) return;
 
 		document.body.classList.add('dither-active');
 
-		const cssVars = getComputedStyle(document.documentElement);
-		const [dr, dg, db] = parseRgb(cssVars.getPropertyValue('--dither'));
+		const [dr, dg, db] = DITHER_COLOR.map(c => c / 255);
 
 		const vsSrc = `
 			attribute vec2 aPos;

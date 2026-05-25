@@ -14,3 +14,6 @@ export const DITHER_DENSITY = 9;
 
 // Edge length in CSS pixels of a single Bayer cell (both filled dots and gaps).
 export const DITHER_CELL = 1.5;
+
+export const DITHER_COLOR: [number, number, number] = [217, 206, 195];
+export const DITHER_COLOR_CSS = `rgb(${DITHER_COLOR.join(', ')})`;

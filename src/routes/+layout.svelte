@@ -1,7 +1,7 @@
 <script lang="ts">
 	import favicon from '$lib/assets/favicon.svg';
 	import Dither from '$lib/Dither.svelte';
-	import { BAYER_8, DITHER_CELL, DITHER_DENSITY } from '$lib/dither-pattern';
+	import { BAYER_8, DITHER_CELL, DITHER_COLOR_CSS, DITHER_DENSITY } from '$lib/dither-pattern';
 
 	let { children } = $props();
 
@@ -27,7 +27,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css2?family=Libertinus+Serif:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
-	{@html `<style>:root { --dither-mask: ${ditherMaskUrl}; --dither-mask-size: ${ditherMaskSize}; }</style>`}
+	{@html `<style>:root { --dither: ${DITHER_COLOR_CSS}; --dither-mask: ${ditherMaskUrl}; --dither-mask-size: ${ditherMaskSize}; }</style>`}
 </svelte:head>
 
 <Dither />
@@ -45,7 +45,6 @@
 
 	:global(:root) {
 		--bg: rgb(255, 248, 232);
-		--dither: rgb(217, 206, 195);
 		--accent: rgb(30, 13, 98);
 		--highlight: rgba(30, 13, 98, 0.4);
 		--shading: rgba(107, 75, 0, 0.2);
