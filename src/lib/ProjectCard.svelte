@@ -117,8 +117,8 @@
     position: absolute;
     top: 0.4em;
     right: 0.4em;
-    width: 1.9em;
-    height: 1.9em;
+    width: 2.1em;
+    height: 2.1em;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -133,8 +133,8 @@
 
   .info-icon {
     display: block;
-    width: 1.8em;
-    height: 1.8em;
+    width: 2em;
+    height: 2em;
     background-color: var(--accent);
     mask-image: url('./assets/info.svg');
     mask-size: contain;
@@ -144,7 +144,7 @@
 
   .card:hover .info-btn,
   .info-btn:focus-visible {
-    opacity: 0.6;
+    opacity: 0.7;
   }
 
   .card:hover .info-btn:hover {
