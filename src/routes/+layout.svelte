@@ -1,9 +1,16 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import favicon from '$lib/assets/favicon.svg';
   import Dither from '$lib/Dither.svelte';
   import { BAYER_8, DITHER_CELL, DITHER_COLOR_CSS, DITHER_DENSITY } from '$lib/dither-pattern';
+  import { renderLatex } from '$lib/latex';
 
   let { children } = $props();
+
+  let katexWarmup = $state('');
+  onMount(async () => {
+    katexWarmup = await renderLatex('$x$');
+  });
 
   function ditherMask(density: number): string {
     const rects: string[] = [];
@@ -32,6 +39,8 @@
 </svelte:head>
 
 <Dither />
+
+<div aria-hidden="true" style="position:absolute;visibility:hidden;pointer-events:none">{@html katexWarmup}</div>
 
 <div class="layout">
   {@render children()}

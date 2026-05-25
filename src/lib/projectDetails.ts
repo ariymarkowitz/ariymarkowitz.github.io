@@ -24,7 +24,7 @@ export function hasProjectDetails(slug: string): boolean {
   return slug in detailsBySlug;
 }
 
-export function getProjectDetailsHtml(slug: string): string | null {
+export async function getProjectDetailsHtml(slug: string): Promise<string | null> {
   const raw = detailsBySlug[slug];
   if (raw === undefined) return null;
 

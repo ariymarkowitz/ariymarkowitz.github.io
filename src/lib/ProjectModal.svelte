@@ -6,7 +6,10 @@
 
   let { project, onClose }: { project: Project; onClose: () => void } = $props();
 
-  let detailsHtml = $derived(getProjectDetailsHtml(project.slug));
+  let detailsHtml = $state<string | null>(null);
+  $effect(() => {
+    getProjectDetailsHtml(project.slug).then(html => { detailsHtml = html; });
+  });
 
   function handleOverlayClick(e: MouseEvent) {
     if (e.target === e.currentTarget) onClose();
