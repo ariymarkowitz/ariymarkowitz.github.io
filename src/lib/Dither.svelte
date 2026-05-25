@@ -18,7 +18,7 @@
 	let canvas: HTMLCanvasElement;
 
 	onMount(() => {
-		const gl = canvas.getContext('webgl', { antialias: false, alpha: true, premultipliedAlpha: false });
+		const gl = canvas.getContext('webgl', { antialias: false, alpha: true });
 		if (!gl) return;
 
 		document.body.classList.add('dither-active');
