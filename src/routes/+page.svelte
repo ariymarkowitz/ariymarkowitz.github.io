@@ -25,14 +25,16 @@
       description: "Abstract interactive art",
       url: "https://ariymarkowitz.github.io/art/ripple/",
       thumbnail: "/thumbnails/ripple.png",
-      tag: "Art"
+      tag: "Art",
+      seizureWarning: true
     },
     {
       title: "Voidpool",
       description: "Enter the void",
       url: "https://ariymarkowitz.github.io/art/voidpool/",
       thumbnail: "/thumbnails/voidpool.png",
-      tag: "Art"
+      tag: "Art",
+      seizureWarning: true
     },
     {
       title: "Hyperbolic space visualiser",
@@ -72,9 +74,17 @@
         <a class="card" href={project.url} target="_blank" rel="noopener noreferrer">
           <div class="thumb-wrapper">
             <img class="thumb" src={project.thumbnail} alt={project.title} />
+            {#if project.seizureWarning}
+              <span class="seizure-bar">
+                <span class="seizure-icon"></span>
+                Seizure warning
+              </span>
+            {/if}
           </div>
           <div class="card-title-row">
-            <span class="title">{project.title}</span>
+            <span class="title">
+              {project.title}
+            </span>
             <span class="tag" style="--tag-color: {tagColors[project.tag]}; background-color: {tagColors[project.tag]}">{project.tag}</span>
           </div>
           <p class="desc">{project.description}</p>
@@ -192,7 +202,7 @@
   }
 
   .title {
-    display: block;
+    display: flex;
     font-weight: 600;
     color: var(--accent);
   }
@@ -201,5 +211,40 @@
     margin: 0.2em 0 0;
     font-size: 0.85em;
     color: rgba(30, 13, 98, 0.8);
+  }
+
+  .seizure-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4em;
+    background: rgba(116, 0, 0, 0.92);
+    color: var(--bg);
+    font-size: 0.75em;
+    font-weight: 400;
+    padding: 0.3em 0.6em;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.08s ease;
+  }
+
+  .seizure-icon {
+    display: inline-block;
+    width: 1.1em;
+    height: 1.1em;
+    flex-shrink: 0;
+    background-color: currentColor;
+    mask-image: url('../lib/assets/warning.svg');
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+  }
+
+  .card:hover .seizure-bar {
+    opacity: 1;
   }
 </style>
