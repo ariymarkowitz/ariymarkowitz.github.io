@@ -51,7 +51,8 @@
   }
 
   :global(body) {
-    margin: 0;
+    margin: 0 auto;
+    max-width: 1200px;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
