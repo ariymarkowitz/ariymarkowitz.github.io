@@ -16,6 +16,22 @@
 
 <div class="title-box">
   <h1 id="name" title="Ari Markowitz">Ari Markowitz</h1>
+  <div class="social-links">
+    <a href="https://github.com/ariymarkowitz" target="_blank" rel="noopener noreferrer">
+      <span class="icon github-icon"></span>
+      <span class="label">GitHub</span>
+    </a>
+    <span class="separator"></span>
+    <a href="https://www.linkedin.com/in/ari-markowitz/" target="_blank" rel="noopener noreferrer">
+      <span class="icon linkedin-icon"></span>
+      <span class="label">LinkedIn</span>
+    </a>
+    <span class="separator"></span>
+    <a href="mailto:ariymarkowitz@gmail.com">
+      <span class="icon email-icon"></span>
+      <span class="label">Email</span>
+    </a>
+  </div>
 </div>
 <main class="frame">
   <p>
@@ -45,13 +61,87 @@
 <style>
   .title-box {
     padding: 0 0 0 2em;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.3em;
   }
 
   #name {
-    margin: 0 0 -0.4ex 0;
-    font-size: clamp(22px, 7.5vw, 40px);
+    margin: 0 1rem -0.4ex 0;
+    font-size: clamp(22px, 9vw, 40px);
     color: var(--accent);
     line-height: 1;
+    flex-grow: 1;
+  }
+
+  .social-links {
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+    transition: opacity 0.1s ease;
+    min-width: 0;
+  }
+
+  .social-links a {
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+    color: var(--accent);
+    text-decoration: none;
+    opacity: 0.8;
+  }
+
+  .social-links a:hover {
+    opacity: 1;
+  }
+
+  @media (max-width: 400px) {
+    .label {
+      display: none;
+    }
+  }
+
+  .separator {
+    position: relative;
+    flex-shrink: 1;
+    width: 1em;
+    height: 1.2em;
+  }
+
+  .separator::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    background-color: var(--accent);
+    opacity: 0.4;
+  }
+
+  .icon {
+    display: inline-block;
+    width: 1.1em;
+    height: 1.1em;
+    background-color: currentColor;
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    flex-shrink: 0;
+  }
+
+  .github-icon {
+    mask-image: url('../lib/assets/github.svg');
+  }
+
+  .linkedin-icon {
+    mask-image: url('../lib/assets/linkedin.svg');
+  }
+
+  .email-icon {
+    mask-image: url('../lib/assets/mail.svg');
   }
 
   .frame {

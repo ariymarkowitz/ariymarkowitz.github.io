@@ -54,7 +54,7 @@
     align-items: center;
     justify-content: center;
     z-index: 100;
-    padding: 1.5em;
+    padding: 1em;
   }
 
   .modal {
