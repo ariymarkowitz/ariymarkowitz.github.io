@@ -32,7 +32,7 @@
   <section class="projects">
     <div class="grid">
       {#each projects as project}
-        <ProjectCard {project} onclick={() => openModal(project)} />
+        <ProjectCard {project} onInfoClick={() => openModal(project)} />
       {/each}
     </div>
   </section>
@@ -95,5 +95,6 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 1.25em;
+    align-items: start;
   }
 </style>

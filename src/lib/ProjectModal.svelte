@@ -1,8 +1,10 @@
 <script lang="ts">
   import type { Project } from '$lib/projects';
-  import { renderLatex } from '$lib/latex';
+  import { getProjectDetailsHtml } from '$lib/projectDetails';
 
   let { project, onClose }: { project: Project; onClose: () => void } = $props();
+
+  let detailsHtml = $derived(getProjectDetailsHtml(project.slug));
 
   function handleOverlayClick(e: MouseEvent) {
     if (e.target === e.currentTarget) onClose();
@@ -24,8 +26,8 @@
       <button class="close-btn" onclick={onClose} aria-label="Close">&#x2715;</button>
     </div>
     <div class="modal-body">
-      {#if project.details}
-        <div class="modal-details">{@html renderLatex(project.details)}</div>
+      {#if detailsHtml}
+        <div class="modal-details">{@html detailsHtml}</div>
       {:else if project.description}
         <p class="modal-desc">{project.description}</p>
       {/if}
@@ -72,7 +74,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.75em 1em 0.6em;
+    padding: 0.75em 1.2em 0.6em;
     border-bottom: 1px solid rgba(107, 75, 0, 0.2);
     gap: 1em;
   }

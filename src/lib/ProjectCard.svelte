@@ -1,13 +1,28 @@
 <script lang="ts">
   import type { Project } from '$lib/projects';
   import { tagColors } from '$lib/projects';
+  import { hasProjectDetails } from '$lib/projectDetails';
 
-  let { project, onclick }: { project: Project; onclick: () => void } = $props();
+  let { project, onInfoClick }: { project: Project; onInfoClick: () => void } = $props();
+
+  function handleInfoClick(e: MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    onInfoClick();
+  }
 </script>
 
-<button class="card" {onclick} type="button">
+<a class="card" href={project.url} target="_blank" rel="noopener noreferrer">
   <div class="thumb-wrapper">
     <img class="thumb" src={project.thumbnail} alt={project.title} />
+    {#if hasProjectDetails(project.slug)}
+      <button
+        class="info-btn"
+        type="button"
+        aria-label="More information about {project.title}"
+        onclick={handleInfoClick}
+      ><span class="info-icon"></span></button>
+    {/if}
     {#if project.seizureWarning}
       <span class="seizure-bar">
         <span class="seizure-icon"></span>
@@ -22,7 +37,7 @@
   {#if project.description}
     <p class="desc">{project.description}</p>
   {/if}
-</button>
+</a>
 
 <style>
   .card {
@@ -96,6 +111,50 @@
     margin: 0.2em 0 0;
     font-size: 0.85em;
     color: rgba(30, 13, 98, 0.8);
+  }
+
+  .info-btn {
+    position: absolute;
+    top: 0.4em;
+    right: 0.4em;
+    width: 1.9em;
+    height: 1.9em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .info-icon {
+    display: block;
+    width: 1.8em;
+    height: 1.8em;
+    background-color: var(--accent);
+    mask-image: url('./assets/info.svg');
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+  }
+
+  .card:hover .info-btn,
+  .info-btn:focus-visible {
+    opacity: 0.6;
+  }
+
+  .card:hover .info-btn:hover {
+    opacity: 1;
+  }
+
+  @media (hover: none) {
+    .info-btn {
+      opacity: 1;
+    }
   }
 
   .seizure-bar {

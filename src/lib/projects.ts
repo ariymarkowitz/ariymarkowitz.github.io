@@ -1,7 +1,7 @@
 export type Project = {
+  slug: string;
   title: string;
   description: string;
-  details?: string;
   url: string;
   thumbnail: string;
   tag: string;
@@ -16,6 +16,7 @@ export const tagColors: Record<string, string> = {
 
 export const projects: Project[] = [
   {
+    slug: "quick-sets",
     title: "Quick Sets",
     description: "A web implementation of the game SET",
     url: "https://ariymarkowitz.github.io/quick-sets/",
@@ -23,6 +24,7 @@ export const projects: Project[] = [
     tag: "Game"
   },
   {
+    slug: "apeirogon",
     title: "Apeirogon",
     description: "Mathematical art",
     url: "/images/apeirogon.jpg",
@@ -30,6 +32,7 @@ export const projects: Project[] = [
     tag: "Art"
   },
   {
+    slug: "ripple",
     title: "Ripple",
     description: "Abstract interactive art",
     url: "https://ariymarkowitz.github.io/art/ripple/",
@@ -38,6 +41,7 @@ export const projects: Project[] = [
     seizureWarning: true
   },
   {
+    slug: "voidpool",
     title: "Voidpool",
     description: "Enter the void",
     url: "https://ariymarkowitz.github.io/art/voidpool/",
@@ -46,6 +50,7 @@ export const projects: Project[] = [
     seizureWarning: true
   },
   {
+    slug: "h3-visualiser",
     title: "Hyperbolic space visualiser",
     description: "Visualisation of isometry groups of hyperbolic space",
     url: "https://ariymarkowitz.github.io/H3-Visualiser/",
@@ -53,6 +58,7 @@ export const projects: Project[] = [
     tag: "Maths"
   },
   {
+    slug: "bruhat-tits-tree",
     title: "Bruhat-Tits tree visualiser",
     description: "Visualisation of isometry groups of Bruhat-Tits trees",
     url: "https://ariymarkowitz.github.io/Bruhat-Tits-Tree-Visualiser/",

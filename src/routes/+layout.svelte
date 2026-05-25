@@ -38,12 +38,6 @@
 </div>
 
 <style>
-  .layout {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
   :global(:root) {
     --bg: rgb(255, 248, 232);
     --accent: rgb(30, 13, 98);
@@ -70,11 +64,6 @@
     -webkit-user-select: none;
   }
 
-  .layout {
-    user-select: text;
-    -webkit-user-select: text;
-  }
-
   :global(body:not(.dither-active)::before) {
     content: '';
     position: fixed;
@@ -87,4 +76,17 @@
     z-index: -1;
     pointer-events: none;
   }
+
+  .layout {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    user-select: text;
+    -webkit-user-select: text;
+  }
+
+  :global(strong) {
+    font-weight: 600;
+  }
+
 </style>
