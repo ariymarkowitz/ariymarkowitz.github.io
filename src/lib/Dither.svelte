@@ -8,6 +8,9 @@
 	const K_SPRING = 10;
 	const K_DAMP = 8;
 	const K_ROTATE = 500;
+	const K_ROTATE_PRESSED = 2000;
+	const K_INWARD_PRESSED = 1000;
+	const PRESS_RATE = 8;
 	const DPR_CAP = 2;
 	const DT = 1 / 60;
 	const FAR_AWAY = 1e9;
@@ -154,6 +157,20 @@
 		let mouseY = FAR_AWAY;
 		let raf = 0;
 
+		let pressTarget = 0;
+		let pressFrom = 0;
+		let pressTime = performance.now();
+		function getPressLevel() {
+			const dt = (performance.now() - pressTime) / 1000;
+			return pressTarget + (pressFrom - pressTarget) * Math.exp(-PRESS_RATE * dt);
+		}
+		function setPressTarget(target: number) {
+			if (target === pressTarget) return;
+			pressFrom = getPressLevel();
+			pressTarget = target;
+			pressTime = performance.now();
+		}
+
 		const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 		const occluder = document.querySelector('.frame') as HTMLElement | null;
@@ -200,9 +217,27 @@
 				raf = requestAnimationFrame(frame);
 			}
 		}
+		function isOnBackground(target: EventTarget | null) {
+			return !(occluder && target instanceof Node && occluder.contains(target));
+		}
+		function onPointerDown(e: PointerEvent) {
+			mouseX = e.clientX;
+			mouseY = e.clientY;
+			if (isOnBackground(e.target)) {
+				setPressTarget(1);
+			}
+			activatePointerTiles();
+			if (raf === 0 && activeCount > 0) {
+				raf = requestAnimationFrame(frame);
+			}
+		}
+		function onPointerUp() {
+			setPressTarget(0);
+		}
 		function onPointerLeave() {
 			mouseX = FAR_AWAY;
 			mouseY = FAR_AWAY;
+			setPressTarget(0);
 		}
 
 		const ro = new ResizeObserver(() => { rebuild(); updateOccluder(); });
@@ -211,10 +246,13 @@
 		window.addEventListener('scroll', updateOccluder, { passive: true });
 
 		const move = onPointerMove as EventListener;
+		const down = onPointerDown as EventListener;
+		const up = onPointerUp as EventListener;
 		const leave = onPointerLeave as EventListener;
 		const pointerListeners: [EventTarget, string, EventListener][] = reducedMotion ? [] : [
 			[window, 'pointermove', move],
-			[window, 'pointerdown', move],
+			[window, 'pointerdown', down],
+			[window, 'pointerup', up],
 			[window, 'pointercancel', leave],
 			[document, 'pointerleave', leave],
 		];
@@ -228,6 +266,9 @@
 
 			const mx = occluded ? FAR_AWAY : mouseX;
 			const my = occluded ? FAR_AWAY : mouseY;
+			const p = getPressLevel();
+			const curK = K_ROTATE + (K_ROTATE_PRESSED - K_ROTATE) * p;
+			const curInward = K_INWARD_PRESSED * p;
 			let writeIdx = 0;
 
 			for (let i = 0; i < activeCount; i++) {
@@ -275,9 +316,10 @@
 						if (dist2 < R2) {
 							const falloff = 1 - dist2 / R2;
 							const invD = 1 / Math.sqrt(dist2 + 1e-4);
-							const f = K_ROTATE * falloff;
-							fx += -mdy * invD * f;
-							fy += mdx * invD * f;
+							const rot = curK * falloff;
+							const inward = curInward * falloff;
+							fx += -mdy * invD * rot - mdx * invD * inward;
+							fy += mdx * invD * rot - mdy * invD * inward;
 						}
 					}
 
