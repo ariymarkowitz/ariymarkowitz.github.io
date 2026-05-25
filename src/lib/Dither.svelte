@@ -254,7 +254,7 @@
 			[window, 'pointerdown', down],
 			[window, 'pointerup', up],
 			[window, 'pointercancel', leave],
-			[document, 'pointerleave', leave],
+			[document.documentElement, 'pointerleave', leave],
 		];
 		for (const [target, name, handler] of pointerListeners) {
 			target.addEventListener(name, handler, { passive: true });
