@@ -60,6 +60,11 @@
     I am currently located in Melbourne, Australia.
     I like maths, design, and programming. I make web apps and games sometimes.
   </p>
+  <p>
+    I am currently looking for a job. If you want to hire someone who is good at
+    solving challenging problems, writes clean code, and has a passion for learning,
+    please <a href="mailto:ariymarkowitz@gmail.com">send me a message</a>!
+  </p>
 
   <section class="projects">
     <div class="grid">
@@ -101,7 +106,7 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.6);
     border-radius: 2px;
     margin: 6px 0 3em 0;
-    padding: 6px 2em 3em 2em;
+    padding: calc(6px + 0.5em) 2em 3em 2em;
     box-shadow: 4px 4px 0 var(--highlight);
   }
 
@@ -122,10 +127,6 @@
     background-size: 8.4853px 8.4853px;
     background-position: left top;
     pointer-events: none;
-  }
-
-  .frame>p {
-    margin-top: 1.63em;
   }
 
   .projects {
