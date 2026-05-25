@@ -60,17 +60,19 @@
 
 <style>
   .title-box {
-    padding: 0 0 0 2em;
+    margin: 0 2em;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-items: baseline;
-    gap: 0.3em;
+    column-gap: 1em;
+    row-gap: 6px;
+    container-type: inline-size;
   }
 
   #name {
-    margin: 0 1rem -0.4ex 0;
-    font-size: clamp(22px, 9vw, 40px);
+    margin: 0 0 -0.4ex 0;
+    font-size: clamp(22px, 15cqw, 40px);
     color: var(--accent);
     line-height: 1;
     flex-grow: 1;
@@ -97,7 +99,7 @@
     opacity: 1;
   }
 
-  @media (max-width: 400px) {
+  @media (max-width: 430px) {
     .label {
       display: none;
     }
