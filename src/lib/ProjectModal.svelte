@@ -152,7 +152,7 @@
   }
 
   :global(.katex) {
-    font-size: 1em;
+    font-size: 0.85em !important;
   }
 
   :global(.math-error) {
