@@ -26,7 +26,7 @@
     {#if project.seizureWarning}
       <span class="seizure-bar">
         <span class="seizure-icon"></span>
-        Seizure warning
+        Warning: flashing lights
       </span>
     {/if}
   </div>
