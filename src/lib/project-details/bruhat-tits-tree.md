@@ -46,7 +46,12 @@ The visualiser has a matrix input with a checkbox to display the translation axi
 
 ## Boundary of the tree
 
-If each vertex is a finite $p$-adic expansion, then an infinite path can be associated with an infinite $p$-adic expansion. Hence we may identify the ‘boundary’ of the tree with the projective $p$-adic line. (The point at infinity corresponds to following the ‘reverse’ path $[0]_n$ as $n \to -\infty$). An infinite ray on the tree is called an ‘end’, and if we fix the starting point of the ray then each end corresponds to a unique point on the boundary. This is shown in the visualisation by the fact that neighbours farther from the origin are exponentially closer together, so that every infinite ray converges to a unique point. (One may draw an analogy to, or represent this directly with, the Poincaré disc model of the hyperbolic plane.) Thus we can visualise the boundary of the tree. We see that $\mathrm{GL}(2, \mathbb{Q}_p)$ also acts on the projective $p$-adic line.
+If each vertex is a finite $p$-adic expansion, then an infinite path can be associated with an infinite $p$-adic expansion. Hence we may identify the ‘boundary’ of the tree with the projective $p$-adic line. (The point at infinity corresponds to following the ‘reverse’ path $[0]_n$ as $n \to -\infty$). An infinite ray on the tree is called an ‘end’, and if we fix the starting point of the ray then each end corresponds to a unique point on the boundary. This is shown in the visualisation by the fact that neighbours farther from the origin are exponentially closer together, so that every infinite ray converges to a unique point. (One may draw an analogy to, or represent this directly with, the Poincaré disc model of the hyperbolic plane.)
+
+We see that the action of $\mathrm{GL}(2, \mathbb{Q}_p)$ on the tree induces an action on the boundary. In particular, a matrix
+$$ \begin{pmatrix}a & b \\ c & d\end{pmatrix}$$
+Acts on a projective number $x$ by mapping it to $\frac{ax + b}{cx + d}$.
+In this visualiser we actually use the map $\frac{dx + c}{bx + a}$ instead, because I made the (aesthetically) wrong choice when I started my thesis.
 
 The visualiser has an 'end' input to see an end of the tree corresponding to a chosen projective $p$-adic number.
 
