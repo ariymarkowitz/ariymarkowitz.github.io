@@ -4,7 +4,7 @@ An [**apeirogon**](https://en.wikipedia.org/wiki/Apeirogon) is a polygon with in
 
 An [**ideal triangle**](https://en.wikipedia.org/wiki/Ideal_triangle) is a triangle with infinitely long sides. It also can’t exist in Euclidean space, but it can in hyperbolic space. Each pair of sides do not touch, but they get asymptotically close together. In the limit, we can say that they touch at an “ideal vertex” which is located “at infinity”. The sides also become parallel in the limit, so the angle between them is 0.
 
-Since the angle at each ideal vertex 0, we can tile the hyperbolic plane with infinitely many ideal triangles around each vertex.
+Since the angle at each ideal vertex is 0, we can tile the hyperbolic plane with infinitely many ideal triangles around each vertex.
 
 This image depicts a tiling of ideal triangles. Its [*dual tiling*](https://mathworld.wolfram.com/DualTessellation.html) (the tiling whose vertices are faces of the original tiling) is a tiling of regular apeirogons.
 
